@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hii Shalu Darling ❤️</title>
-    
-    <!-- Firebase SDK -->
     <script type="module">
+        // Import Firebase modules properly
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
         
-        // Your Firebase Configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -41,7 +40,6 @@
             }
         };
     </script>
-    
     <style>
         body {
             text-align: center;
@@ -54,6 +52,7 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
+            transition: filter 0.5s ease;
         }
         h1 {
             color: #ff4d6d;
@@ -126,7 +125,7 @@
     <div class="corner-text">Made by Sunny</div>
     <h1>Hii Shalu Darling ❤️ <br>Are you my wife? (Kya tum meri biwi ho?)</h1>
     <div class="buttons">
-        <button class="yes" onclick="submitResponse('Yes', 'Achha meri jaan meri wife hai ❤️.')">Yes</button>
+        <button class="yes" onclick="submitResponse('Yes', 'Achha meri jaan meri wife hai ❤️')">Yes</button>
         <button class="no" onclick="submitResponse('No', 'Mai dekh raha hu yaar 🤨')">No</button>
     </div>
     <div id="blur-bg" class="blur-effect"></div>

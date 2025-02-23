@@ -3,10 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Hinaxa</title>
+    <title>Hii Shalu Darling ❤️</title>
+    <script type="module">
+        // Import Firebase modules properly
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        window.submitResponse = async function(answer, msg) {
+            document.getElementById('message').innerText = msg;
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('blur-bg').style.display = 'block';
+            
+            try {
+                await addDoc(collection(db, "responses"), {
+                    name: "Shalu",
+                    answer: answer,
+                    timestamp: new Date()
+                });
+                console.log("Response recorded successfully");
+            } catch (error) {
+                console.error("Error recording response: ", error);
+            }
+        };
+    </script>
+    <style>
+        body {
+            text-align: center;
+            background-color: #ffdde1;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: filter 0.5s ease;
+        }
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 20px;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        .no {
+            background-color: #333;
+            color: white;
+        }
+        .yes:hover {
+            background-color: #ff1a4d;
+        }
+        .no:hover {
+            background-color: #555;
+        }
+        #message {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #ff4d6d;
+            font-weight: bold;
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            z-index: 10;
+        }
+        .blur-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 221, 225, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            z-index: 5;
+        }
+        .corner-text {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World! 🚀</h1>
-    <p>This is my first GitHub Pages site!</p>
+    <div class="corner-text">Made by Sunny</div>
+    <h1>Hii Shalu Darling ❤️ <br>Are you my wife? (Kya tum meri biwi ho?)</h1>
+    <div class="buttons">
+        <button class="yes" onclick="submitResponse('Yes', 'Ab bol he diya to ek kiss to banta hai "meri jaan❤️""')">Yes</button>
+        <button class="no" onclick="submitResponse('No', 'Mai dekh raha hu yaar 🤨')">No</button>
+    </div>
+    <div id="blur-bg" class="blur-effect"></div>
+    <h2 id="message"></h2>
 </body>
 </html>

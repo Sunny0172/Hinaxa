@@ -3,132 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hii Shalu Darling ❤️</title>
-    <script type="module">
-        // Import Firebase modules properly
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-        
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        
-        window.submitResponse = async function(answer, msg) {
-            document.getElementById('message').innerText = msg;
-            document.getElementById('message').style.display = 'block';
-            document.getElementById('blur-bg').style.display = 'block';
-            
-            try {
-                await addDoc(collection(db, "responses"), {
-                    name: "Shalu",
-                    answer: answer,
-                    timestamp: new Date()
-                });
-                console.log("Response recorded successfully");
-            } catch (error) {
-                console.error("Error recording response: ", error);
-            }
-        };
-    </script>
+    <title>Hii Nitya</title>
     <style>
+        /* Smooth Font & Aesthetic Styling */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         body {
-            text-align: center;
-            background-color: #ffdde1;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f9a8d4, #c084fc);
+            height: 100vh;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
-            position: relative;
             overflow: hidden;
+            position: relative;
             transition: filter 0.5s ease;
         }
+
         h1 {
-            color: #ff4d6d;
-            font-size: 2.2em;
+            font-size: 2.5em;
+            color: white;
+            text-align: center;
             margin-bottom: 20px;
+            font-weight: 600;
         }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease;
+        }
+
         .buttons {
             margin-top: 20px;
         }
+
         button {
-            font-size: 20px;
+            font-size: 18px;
             padding: 12px 24px;
             margin: 10px;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
             transition: 0.3s;
-        }
-        .yes {
-            background-color: #ff4d6d;
-            color: white;
-        }
-        .no {
-            background-color: #333;
-            color: white;
-        }
-        .yes:hover {
-            background-color: #ff1a4d;
-        }
-        .no:hover {
-            background-color: #555;
-        }
-        #message {
-            margin-top: 30px;
-            font-size: 24px;
-            color: #ff4d6d;
             font-weight: bold;
-            display: none;
+        }
+
+        .yes {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .no {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .yes:hover {
+            background-color: #16a34a;
+        }
+
+        .no:hover {
+            background-color: #dc2626;
+        }
+
+        /* Surprise Message */
+        #thank-you-message, #no-message {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+            font-size: 22px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
             z-index: 10;
         }
-        .blur-effect {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 221, 225, 0.7);
-            backdrop-filter: blur(5px);
-            display: none;
-            z-index: 5;
+
+        /* Blur Effect Only on Background */
+        .blurred {
+            filter: blur(8px);
         }
+
+        /* Top Right & Bottom Branding */
         .corner-text {
             position: absolute;
             top: 10px;
-            right: 15px;
+            right: 20px;
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .bottom-text {
+            position: absolute;
+            bottom: 15px;
             font-size: 14px;
-            color: #333;
+            color: white;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="corner-text">Made by Sunny</div>
-    <h1>Hii Shalu Darling ❤️ <br>Are you my wife? (Kya tum meri biwi ho?)</h1>
-    <div class="buttons">
-        <button class="yes" onclick="submitResponse('Yes', 'Achha meri jaan meri wife hai ❤️')">Yes</button>
-        <button class="no" onclick="submitResponse('No', 'Mai dekh raha hu yaar 🤨')">No</button>
+    <h1>Hii Nitya 👋</h1>
+    <div class="question-box" id="question-box">
+        <h2>I want to say something...</h2>
+        <p>If you agree, click "Yes" or "No"</p>
+        <div class="buttons">
+            <button class="yes" onclick="showYesMessage()">Yes</button>
+            <button class="no" onclick="showNoMessage()">No</button>
+        </div>
     </div>
-    <div id="blur-bg" class="blur-effect"></div>
-    <h2 id="message"></h2>
+    
+    <!-- Yes Message -->
+    <div id="thank-you-message">
+        Thanks a lot to you 🙏  
+        <br> I learned from you...  
+        <br> I will never forget that this person or these days of my life changed my perspective.  
+        <br> Once again, thank you so much as a business partner. 💖
+    </div>
+
+    <!-- No Message -->
+    <div id="no-message">
+        You deserve to see this. You can click Yes.
+    </div>
+
+    <div class="bottom-text">Powered by Hinaxia Games</div>
+
+    <script>
+        function showYesMessage() {
+            document.getElementById("question-box").classList.add("blurred");
+            document.getElementById("thank-you-message").style.transform = "translate(-50%, -50%) scale(1)";
+            document.getElementById("thank-you-message").style.opacity = "1";
+        }
+
+        function showNoMessage() {
+            document.getElementById("no-message").style.transform = "translate(-50%, -50%) scale(1)";
+            document.getElementById("no-message").style.opacity = "1";
+        }
+    </script>
 </body>
 </html>

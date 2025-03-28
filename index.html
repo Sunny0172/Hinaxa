@@ -3,157 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hii Nitya</title>
+    <title>GitHub Slider</title>
     <style>
-        /* Smooth Font & Aesthetic Styling */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f9a8d4, #c084fc);
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            transition: filter 0.5s ease;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
-
         h1 {
-            font-size: 2.5em;
-            color: white;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .question-box {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 25px 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.4s ease;
-        }
-
-        .buttons {
             margin-top: 20px;
         }
-
-        button {
-            font-size: 18px;
-            padding: 12px 24px;
-            margin: 10px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: bold;
+        .slider-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
-
-        .yes {
-            background-color: #22c55e;
-            color: white;
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
         }
-
-        .no {
-            background-color: #ef4444;
-            color: white;
+        .slide {
+            min-width: 100%;
+            transition: 0.5s;
         }
-
-        .yes:hover {
-            background-color: #16a34a;
+        img {
+            width: 100%;
+            border-radius: 10px;
         }
-
-        .no:hover {
-            background-color: #dc2626;
-        }
-
-        /* Surprise Message */
-        #thank-you-message, #no-message {
+        .prev, .next {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            width: 60%;
-            max-width: 600px;
-            font-size: 22px;
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            z-index: 10;
-        }
-
-        /* Blur Effect Only on Background */
-        .blurred {
-            filter: blur(8px);
-        }
-
-        /* Top Right & Bottom Branding */
-        .corner-text {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 16px;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
             color: white;
-            font-weight: bold;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
         }
-
-        .bottom-text {
-            position: absolute;
-            bottom: 15px;
-            font-size: 14px;
-            color: white;
-            font-weight: bold;
-        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
     </style>
 </head>
 <body>
-    <div class="corner-text">Made by Sunny</div>
-    <h1>Hii Nitya 👋</h1>
-    <div class="question-box" id="question-box">
-        <h2>I want to say something...</h2>
-        <p>If you agree, click "Yes" or "No"</p>
-        <div class="buttons">
-            <button class="yes" onclick="showYesMessage()">Yes</button>
-            <button class="no" onclick="showNoMessage()">No</button>
+    <h1>GitHub</h1>
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide"><img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/main/untitled.png" alt="Slide 1"></div>
+            <div class="slide"><img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/main/untitled.png" alt="Slide 2"></div>
+            <div class="slide"><img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/main/untitled.png" alt="Slide 3"></div>
         </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
     </div>
-    
-    <!-- Yes Message -->
-    <div id="thank-you-message">
-        Thanks a lot to you 🙏  
-        <br> I learned from you...  
-        <br> I will never forget that this person or these days of my life changed my perspective.  
-        <br> Once again, thank you so much as a business partner. 💖
-    </div>
-
-    <!-- No Message -->
-    <div id="no-message">
-        You deserve to see this. You can click Yes.
-    </div>
-
-    <div class="bottom-text">Powered by Hinaxia Games</div>
 
     <script>
-        function showYesMessage() {
-            document.getElementById("question-box").classList.add("blurred");
-            document.getElementById("thank-you-message").style.transform = "translate(-50%, -50%) scale(1)";
-            document.getElementById("thank-you-message").style.opacity = "1";
-        }
-
-        function showNoMessage() {
-            document.getElementById("no-message").style.transform = "translate(-50%, -50%) scale(1)";
-            document.getElementById("no-message").style.opacity = "1";
+        let index = 0;
+        function moveSlide(direction) {
+            const slider = document.querySelector('.slider');
+            const slides = document.querySelectorAll('.slide');
+            index = (index + direction + slides.length) % slides.length;
+            slider.style.transform = `translateX(-${index * 100}%)`;
         }
     </script>
 </body>

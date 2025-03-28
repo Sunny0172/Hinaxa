@@ -3,68 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Showcase</title>
+    <title>Nitya Shop - Premium Products</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
-        .category { margin-bottom: 40px; }
-        .category h2 { text-align: center; margin-bottom: 20px; }
-        .product-container { display: flex; overflow-x: auto; gap: 20px; padding: 10px; }
-        .product { position: relative; width: 300px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .slider-container { position: relative; width: 100%; overflow: hidden; border-radius: 10px; }
-        .slider { display: flex; transition: transform 0.5s ease-in-out; }
-        .slide { min-width: 100%; }
-        img { width: 100%; border-radius: 10px; }
-        .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px; cursor: pointer; }
-        .prev { left: 5px; }
-        .next { right: 5px; }
-        .product-info { text-align: center; margin-top: 10px; }
-        .product-info h3 { font-size: 18px; }
-        .product-info p { font-size: 16px; font-weight: bold; color: green; }
+        /* CSS Variables for Easy Customization */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .store-name {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Product Category Section */
+        .category {
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Image Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Slider Controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+
+        .slider-dot.active {
+            background: white;
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: 1rem 0;
+        }
+
+        .product-price {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .contact-bar {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    
-    <div id="categories">
-        <script>
-            const categories = ["Cosmetics", "Perfumes", "Men's Grooming", "Men's Fashion", "Women's Fashion"];
-            let html = "";
-            categories.forEach(category => {
-                html += `<div class='category'><h2>${category}</h2><div class='product-container'>`;
-                for (let i = 1; i <= 10; i++) {
-                    html += `
-                        <div class='product'>
-                            <div class='slider-container'>
-                                <div class='slider'>
-                                    <div class='slide'><img src='perfume01${category.toLowerCase()}_product${i}_1.jpeg' alt='${category} Product ${i}'></div>
-                                    <div class='slide'><img src='perfume02${category.toLowerCase()}_product${i}_2.jpeg' alt='${category} Product ${i}'></div>
-                                    <div class='slide'><img src='perfume03${category.toLowerCase()}_product${i}_3.jpeg' alt='${category} Product ${i}'></div>
-                                    <div class='slide'><img src='perfume01${category.toLowerCase()}_product${i}_4.jpeg' alt='${category} Product ${i}'></div>
-                                </div>
-                                <button class='prev' onclick='moveSlide(this, -1)'>&#10094;</button>
-                                <button class='next' onclick='moveSlide(this, 1)'>&#10095;</button>
-                            </div>
-                            <div class='product-info'>
-                                <h3>${category} Product ${i}</h3>
-                                <p>$${(Math.random() * 200 + 50).toFixed(2)}</p>
-                            </div>
-                        </div>`;
-                }
-                html += "</div></div>";
-            });
-            document.write(html);
-        </script>
+    <header class="header">
+        <h1 class="store-name">Nitya Shop</h1>
+        <p class="tagline">Premium Products</p>
+        <p class="contact-info">Contact: +91 88568 60665</p>
+        <p class="discount">DM for order with discount 48%</p>
+    </header>
+
+    <!-- Categories will be dynamically populated -->
+    <main id="categories-container"></main>
+
+    <div class="contact-bar">
+        Call/WhatsApp: +91 88568 60665 | DM for 48% Discount
     </div>
-    
+
     <script>
-        function moveSlide(button, step) {
-            const slider = button.parentElement.querySelector('.slider');
-            const slides = slider.querySelectorAll('.slide');
-            let index = parseInt(slider.dataset.index || 0);
-            index = (index + step + slides.length) % slides.length;
-            slider.dataset.index = index;
-            slider.style.transform = `translateX(-${index * 100}%)`;
+        // Editable Data - Modify this section as needed
+        const storeData = {
+            categories: [
+                { name: "Cosmetics", id: "cosmetics" },
+                { name: "Perfume", id: "perfume" },
+                { name: "Men's Grooming", id: "mens-grooming" },
+                { name: "Men's Fashion", id: "mens-fashion" },
+                { name: "Women Fashion", id: "womens-fashion" }
+            ],
+            products: []
+        };
+
+        // Sample Product Structure (Repeat for all 50 products)
+        // Add your products in this format:
+        /*
+        storeData.products.push({
+            category: 'perfume',
+            name: 'BLOOM 20 ML Perfume',
+            price: '₹299 (Incl. of All Taxes)',
+            code: 'AMK85UFF02',
+            images: [
+                'perfume1-1.jpg',
+                'perfume1-2.jpg',
+                'perfume1-3.jpg',
+                'perfume1-4.jpg'
+            ]
+        });
+        */
+
+        // Initialize Sliders
+        function initSlider(container) {
+            const slider = container.querySelector('.slider');
+            const slides = container.querySelectorAll('.slide');
+            let currentIndex = 0;
+
+            function updateSlider() {
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                container.querySelectorAll('.slider-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            // Create dots
+            const dotsContainer = container.querySelector('.slider-controls');
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            // Touch/swipe handling
+            let touchStartX = 0;
+            container.addEventListener('touchstart', e => {
+                touchStartX = e.touches[0].clientX;
+            });
+
+            container.addEventListener('touchend', e => {
+                const touchEndX = e.changedTouches[0].clientX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        currentIndex = Math.min(currentIndex + 1, slides.length - 1);
+                    } else {
+                        currentIndex = Math.max(currentIndex - 1, 0);
+                    }
+                    updateSlider();
+                }
+            });
         }
+
+        // Render Products
+        function renderProducts() {
+            const container = document.getElementById('categories-container');
+            
+            storeData.categories.forEach(category => {
+                const categorySection = document.createElement('section');
+                categorySection.className = 'category';
+                categorySection.innerHTML = `
+                    <h2 class="category-title">${category.name}</h2>
+                    <div class="products-grid" id="${category.id}"></div>
+                `;
+                
+                const productsGrid = categorySection.querySelector('.products-grid');
+                // Add your products here
+                // Example product structure:
+                /*
+                productsGrid.innerHTML += `
+                    <div class="product-card">
+                        <div class="slider-container">
+                            <div class="slider">
+                                ${product.images.map(img => `
+                                    <div class="slide">
+                                        <img src="images/${img}" alt="${product.name}">
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="slider-controls"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="product-price">${product.price}</p>
+                            <p>Product Code: ${product.code}</p>
+                        </div>
+                    </div>
+                `;
+                */
+                
+                container.appendChild(categorySection);
+                categorySection.querySelectorAll('.slider-container').forEach(initSlider);
+            });
+        }
+
+        // Initialize the page
+        renderProducts();
     </script>
 </body>
 </html>

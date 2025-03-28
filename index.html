@@ -3,208 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog</title>
+    <title>Product Showcase</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 90%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .category {
-            margin-bottom: 40px;
-        }
-
-        .category h2 {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .product {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            width: calc(33.333% - 20px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .product-image-slider {
-            position: relative;
-        }
-
-        .product-image-slider img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .slider-nav button {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .product-info {
-            padding: 15px;
-            text-align: center;
-        }
-
-        .product-info h3 {
-            font-size: 18px;
-            color: #333;
-        }
-
-        .product-info p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .product-info .price {
-            font-size: 16px;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .category .product:nth-child(odd) {
-            background-color: #f9f9f9;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .category { margin-bottom: 40px; }
+        .category h2 { text-align: center; margin-bottom: 20px; }
+        .product-container { display: flex; overflow-x: auto; gap: 20px; padding: 10px; }
+        .product { position: relative; width: 300px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .slider-container { position: relative; width: 100%; overflow: hidden; border-radius: 10px; }
+        .slider { display: flex; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; }
+        img { width: 100%; border-radius: 10px; }
+        .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 5px; cursor: pointer; }
+        .prev { left: 5px; }
+        .next { right: 5px; }
+        .product-info { text-align: center; margin-top: 10px; }
+        .product-info h3 { font-size: 18px; }
+        .product-info p { font-size: 16px; font-weight: bold; color: green; }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Product Catalog</h1>
-
-    <!-- Category 1 -->
-    <div class="category">
-        <h2>Cosmetics</h2>
-        <div class="product-list">
-            <!-- Product 1 -->
-            <div class="product">
-                <div class="product-image-slider">
-                    <img src="product1-image1.jpg" alt="Product 1">
-                    <div class="slider-nav">
-                        <button>Prev</button>
-                        <button>Next</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3>Cosmetic Product 1</h3>
-                    <p>Description of the product goes here.</p>
-                    <p class="price">$10.00</p>
-                </div>
-            </div>
-            <!-- Product 2 -->
-            <div class="product">
-                <div class="product-image-slider">
-                    <img src="product2-image1.jpg" alt="Product 2">
-                    <div class="slider-nav">
-                        <button>Prev</button>
-                        <button>Next</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3>Cosmetic Product 2</h3>
-                    <p>Description of the product goes here.</p>
-                    <p class="price">$12.00</p>
-                </div>
-            </div>
-            <!-- Add more products here (Product 3 - Product 10) -->
-        </div>
+    
+    <div id="categories">
+        <script>
+            const categories = ["Cosmetics", "Perfumes", "Men's Grooming", "Men's Fashion", "Women's Fashion"];
+            let html = "";
+            categories.forEach(category => {
+                html += `<div class='category'><h2>${category}</h2><div class='product-container'>`;
+                for (let i = 1; i <= 10; i++) {
+                    html += `
+                        <div class='product'>
+                            <div class='slider-container'>
+                                <div class='slider'>
+                                    <div class='slide'><img src='${category.toLowerCase()}_product${i}_1.jpg' alt='${category} Product ${i}'></div>
+                                    <div class='slide'><img src='${category.toLowerCase()}_product${i}_2.jpg' alt='${category} Product ${i}'></div>
+                                    <div class='slide'><img src='${category.toLowerCase()}_product${i}_3.jpg' alt='${category} Product ${i}'></div>
+                                    <div class='slide'><img src='${category.toLowerCase()}_product${i}_4.jpg' alt='${category} Product ${i}'></div>
+                                </div>
+                                <button class='prev' onclick='moveSlide(this, -1)'>&#10094;</button>
+                                <button class='next' onclick='moveSlide(this, 1)'>&#10095;</button>
+                            </div>
+                            <div class='product-info'>
+                                <h3>${category} Product ${i}</h3>
+                                <p>$${(Math.random() * 200 + 50).toFixed(2)}</p>
+                            </div>
+                        </div>`;
+                }
+                html += "</div></div>";
+            });
+            document.write(html);
+        </script>
     </div>
-
-    <!-- Category 2 -->
-    <div class="category">
-        <h2>Men's Grooming</h2>
-        <div class="product-list">
-            <!-- Product 1 -->
-            <div class="product">
-                <div class="product-image-slider">
-                    <img src="product1-image1.jpg" alt="Product 1">
-                    <div class="slider-nav">
-                        <button>Prev</button>
-                        <button>Next</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3>Grooming Product 1</h3>
-                    <p>Description of the product goes here.</p>
-                    <p class="price">$15.00</p>
-                </div>
-            </div>
-            <!-- Product 2 -->
-            <div class="product">
-                <div class="product-image-slider">
-                    <img src="product2-image1.jpg" alt="Product 2">
-                    <div class="slider-nav">
-                        <button>Prev</button>
-                        <button>Next</button>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3>Grooming Product 2</h3>
-                    <p>Description of the product goes here.</p>
-                    <p class="price">$18.00</p>
-                </div>
-            </div>
-            <!-- Add more products here (Product 3 - Product 10) -->
-        </div>
-    </div>
-
-    <!-- Category 3 -->
-    <div class="category">
-        <h2>Home Decor</h2>
-        <div class="product-list">
-            <!-- Add 10 products here for this category -->
-        </div>
-    </div>
-
-    <!-- Category 4 -->
-    <div class="category">
-        <h2>Electronics</h2>
-        <div class="product-list">
-            <!-- Add 10 products here for this category -->
-        </div>
-    </div>
-
-    <!-- Category 5 -->
-    <div class="category">
-        <h2>Fitness Equipment</h2>
-        <div class="product-list">
-            <!-- Add 10 products here for this category -->
-        </div>
-    </div>
-</div>
-
+    
+    <script>
+        function moveSlide(button, step) {
+            const slider = button.parentElement.querySelector('.slider');
+            const slides = slider.querySelectorAll('.slide');
+            let index = parseInt(slider.dataset.index || 0);
+            index = (index + step + slides.length) % slides.length;
+            slider.dataset.index = index;
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        }
+    </script>
 </body>
 </html>
+

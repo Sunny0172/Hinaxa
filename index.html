@@ -3,24 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Slider</title>
+    <title>Perfume Image Slider</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #222;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border: 5px solid white;
-            border-radius: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; }
+        .slider-container { position: relative; width: 80%; max-width: 800px; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .slider { display: flex; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; }
+        img { width: 100%; border-radius: 10px; }
+        .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; cursor: pointer; }
+        .prev { left: 10px; }
+        .next { right: 10px; }
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/sunny0172/Hinaxa/main/images/untitled.png" alt="Image">
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide"><img src="perfume01.jpeg" alt="Perfume 1"></div>
+            <div class="slide"><img src="perfume02.jpeg" alt="Perfume 2"></div>
+            <div class="slide"><img src="perfume03.jpeg" alt="Perfume 3"></div>
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+    
+    <script>
+        let index = 0;
+        function moveSlide(step) {
+            const slides = document.querySelectorAll('.slide');
+            index = (index + step + slides.length) % slides.length;
+            document.querySelector('.slider').style.transform = `translateX(-${index * 100}%)`;
+        }
+    </script>
 </body>
 </html>

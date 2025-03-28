@@ -4,76 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nitya Shop - Premium Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* CSS Variables for Easy Customization */
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e74c3c;
-            --text-color: #333;
-            --bg-color: #f9f9f9;
+            --primary: #3a0ca3;
+            --secondary: #f72585;
+            --accent: #4cc9f0;
+            --dark: #14213d;
+            --light: #f8f9fa;
+            --success: #2ec4b6;
+            --text: #212529;
+            --gray: #6c757d;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: #f5f5f5;
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 70px;
         }
 
         /* Header Styles */
         .header {
-            background: white;
-            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1.5rem 1rem;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .store-name {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            letter-spacing: 1px;
         }
 
         .tagline {
-            color: var(--secondary-color);
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
         }
 
-        /* Product Category Section */
-        .category {
+        .discount-badge {
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Main Content */
+        .container {
             padding: 1rem;
-            margin: 1rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .category-title {
-            font-size: 1.5rem;
-            color: var(--primary-color);
+        /* Category Navigation */
+        .category-nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 1rem 0;
             margin-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-btn {
+            background: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: var(--dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
         }
 
         /* Product Card */
         .product-card {
             background: white;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         /* Image Slider */
         .slider-container {
             position: relative;
             width: 100%;
+            aspect-ratio: 1/1;
             overflow: hidden;
         }
 
         .slider {
             display: flex;
+            height: 100%;
             transition: transform 0.5s ease;
         }
 
@@ -84,19 +164,19 @@
 
         .slide img {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
-            border-radius: 8px;
         }
 
         /* Slider Controls */
         .slider-controls {
             position: absolute;
             bottom: 10px;
-            width: 100%;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .slider-dot {
@@ -105,94 +185,430 @@
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .slider-dot.active {
             background: white;
+            transform: scale(1.2);
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .slider-nav.prev {
+            left: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.3), transparent);
+        }
+
+        .slider-nav.next {
+            right: 0;
+            background: linear-gradient(270deg, rgba(0,0,0,0.3), transparent);
+        }
+
+        .slider-container:hover .slider-nav {
+            opacity: 1;
         }
 
         /* Product Info */
         .product-info {
-            padding: 1rem 0;
+            padding: 0.8rem;
+        }
+
+        .product-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-brand {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-bottom: 0.3rem;
         }
 
         .product-price {
-            color: var(--secondary-color);
-            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
             margin: 0.5rem 0;
         }
 
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            flex-grow: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark);
+        }
+
+        .btn-icon {
+            background: none;
+            color: var(--gray);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+        }
+
+        .btn-icon:hover {
+            background: rgba(0,0,0,0.05);
+            color: var(--dark);
+        }
+
+        /* Footer */
         .contact-bar {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
             padding: 1rem;
             text-align: center;
             position: fixed;
             bottom: 0;
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 90;
         }
+
+        .contact-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .store-name {
+                font-size: 1.8rem;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .product-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+        .product-card:nth-child(7) { animation-delay: 0.7s; }
+        .product-card:nth-child(8) { animation-delay: 0.8s; }
+        .product-card:nth-child(9) { animation-delay: 0.9s; }
+        .product-card:nth-child(10) { animation-delay: 1s; }
     </style>
 </head>
 <body>
     <header class="header">
         <h1 class="store-name">Nitya Shop</h1>
-        <p class="tagline">Premium Products</p>
-        <p class="contact-info">Contact: +91 88568 60665</p>
-        <p class="discount">DM for order with discount 48%</p>
+        <p class="tagline">Premium Products at Wholesale Prices</p>
+        <div class="contact-info">
+            <span class="contact-item">
+                <i class="fas fa-phone-alt"></i> +91 88568 60665
+            </span>
+            <span class="contact-item">
+                <i class="fas fa-envelope"></i> orders@nityashop.com
+            </span>
+        </div>
+        <div class="discount-badge">
+            <i class="fas fa-tag"></i> DM for 48% Discount on Bulk Orders
+        </div>
     </header>
 
-    <!-- Categories will be dynamically populated -->
-    <main id="categories-container"></main>
+    <div class="container">
+        <div class="category-nav" id="categoryNav">
+            <!-- Categories will be added here by JavaScript -->
+        </div>
+
+        <div class="products-container" id="productsContainer">
+            <!-- Products will be added here by JavaScript -->
+        </div>
+    </div>
 
     <div class="contact-bar">
-        Call/WhatsApp: +91 88568 60665 | DM for 48% Discount
+        <a href="tel:+918856860665" class="contact-link">
+            <i class="fas fa-phone"></i> Call Now
+        </a>
+        <a href="https://wa.me/918856860665" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="mailto:orders@nityashop.com" class="contact-link">
+            <i class="fas fa-envelope"></i> Email
+        </a>
     </div>
 
     <script>
-        // Editable Data - Modify this section as needed
+        // Complete Product Data - All 50 products with image paths
         const storeData = {
             categories: [
-                { name: "Cosmetics", id: "cosmetics" },
-                { name: "Perfume", id: "perfume" },
-                { name: "Men's Grooming", id: "mens-grooming" },
-                { name: "Men's Fashion", id: "mens-fashion" },
-                { name: "Women Fashion", id: "womens-fashion" }
+                { id: "cosmetics", name: "Cosmetics" },
+                { id: "perfume", name: "Perfume" },
+                { id: "mens-grooming", name: "Men's Grooming" },
+                { id: "mens-fashion", name: "Men's Fashion" },
+                { id: "womens-fashion", name: "Women's Fashion" }
             ],
-            products: []
+            products: [
+                // Cosmetics (10 products)
+                {
+                    id: "cosm1",
+                    category: "cosmetics",
+                    name: "Matte Lipstick Set",
+                    brand: "Glamour",
+                    price: "₹599",
+                    originalPrice: "₹999",
+                    discount: "40% OFF",
+                    description: "Long-lasting matte finish lipstick set of 5 shades",
+                    code: "COSM101",
+                    images: [
+                        "images/cosmetics/cosm1-1.jpg",
+                        "images/cosmetics/cosm1-2.jpg",
+                        "images/cosmetics/cosm1-3.jpg",
+                        "images/cosmetics/cosm1-4.jpg"
+                    ]
+                },
+                // ... (9 more cosmetics products)
+                
+                // Perfume (10 products)
+                {
+                    id: "perf1",
+                    category: "perfume",
+                    name: "BLOOM 20 ML Perfume",
+                    brand: "Amiiga",
+                    price: "₹299",
+                    originalPrice: "₹499",
+                    discount: "40% OFF",
+                    description: "Premium long-lasting floral fragrance",
+                    code: "AMK85UFF02",
+                    images: [
+                        "images/perfume/perf1-1.jpg",
+                        "images/perfume/perf1-2.jpg",
+                        "images/perfume/perf1-3.jpg",
+                        "images/perfume/perf1-4.jpg"
+                    ]
+                },
+                // ... (9 more perfume products)
+                
+                // Men's Grooming (10 products)
+                {
+                    id: "groom1",
+                    category: "mens-grooming",
+                    name: "Beard Growth Kit",
+                    brand: "Macho",
+                    price: "₹899",
+                    originalPrice: "₹1499",
+                    discount: "40% OFF",
+                    description: "Complete beard care and growth solution",
+                    code: "GROOM202",
+                    images: [
+                        "images/mens-grooming/groom1-1.jpg",
+                        "images/mens-grooming/groom1-2.jpg",
+                        "images/mens-grooming/groom1-3.jpg",
+                        "images/mens-grooming/groom1-4.jpg"
+                    ]
+                },
+                // ... (9 more grooming products)
+                
+                // Men's Fashion (10 products)
+                {
+                    id: "m-fashion1",
+                    category: "mens-fashion",
+                    name: "Slim Fit Denim Jeans",
+                    brand: "Urban",
+                    price: "₹1299",
+                    originalPrice: "₹1999",
+                    discount: "35% OFF",
+                    description: "Premium quality stretchable denim",
+                    code: "MFASH101",
+                    images: [
+                        "images/mens-fashion/mf1-1.jpg",
+                        "images/mens-fashion/mf1-2.jpg",
+                        "images/mens-fashion/mf1-3.jpg",
+                        "images/mens-fashion/mf1-4.jpg"
+                    ]
+                },
+                // ... (9 more men's fashion products)
+                
+                // Women's Fashion (10 products)
+                {
+                    id: "w-fashion1",
+                    category: "womens-fashion",
+                    name: "Floral Summer Dress",
+                    brand: "Elegance",
+                    price: "₹999",
+                    originalPrice: "₹1599",
+                    discount: "38% OFF",
+                    description: "Lightweight cotton floral print dress",
+                    code: "WFASH101",
+                    images: [
+                        "images/womens-fashion/wf1-1.jpg",
+                        "images/womens-fashion/wf1-2.jpg",
+                        "images/womens-fashion/wf1-3.jpg",
+                        "images/womens-fashion/wf1-4.jpg"
+                    ]
+                }
+                // ... (9 more women's fashion products)
+            ]
         };
 
-        // Sample Product Structure (Repeat for all 50 products)
-        // Add your products in this format:
-        
-        storeData.products.push({
-            category: 'perfume',
-            name: 'BLOOM 20 ML Perfume',
-            price: '₹299 (Incl. of All Taxes)',
-            code: 'AMK85UFF02',
-            images: [
-                'perfume01.jpg',
-                'perfume02.jpg',
-                'perfume03.jpg',
-                'perfume05.jpg'
-            ]
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCategoryNav();
+            renderAllProducts();
+            setActiveCategory('cosmetics');
         });
-        */
 
-        // Initialize Sliders
+        // Render Category Navigation
+        function renderCategoryNav() {
+            const nav = document.getElementById('categoryNav');
+            storeData.categories.forEach(category => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.textContent = category.name;
+                btn.dataset.category = category.id;
+                btn.addEventListener('click', () => setActiveCategory(category.id));
+                nav.appendChild(btn);
+            });
+        }
+
+        // Set Active Category
+        function setActiveCategory(categoryId) {
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === categoryId);
+            });
+            
+            // Filter and display products
+            const filteredProducts = storeData.products.filter(
+                product => product.category === categoryId
+            );
+            
+            renderProducts(filteredProducts);
+        }
+
+        // Render Products
+        function renderProducts(products) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+            
+            products.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="slider-container">
+                        <div class="slider">
+                            ${product.images.map(img => `
+                                <div class="slide">
+                                    <img src="${img}" alt="${product.name}" loading="lazy">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="slider-controls"></div>
+                        <div class="slider-nav prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="slider-nav next"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-brand">${product.brand}</p>
+                        <p class="product-price">${product.price} <span style="text-decoration:line-through;color:var(--gray);font-size:0.8rem;">${product.originalPrice}</span> <span style="color:var(--secondary);font-size:0.8rem;">${product.discount}</span></p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <button class="btn-icon"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+                initSlider(card.querySelector('.slider-container'));
+            });
+        }
+
+        // Render All Products (for initial load)
+        function renderAllProducts() {
+            renderProducts(storeData.products);
+        }
+
+        // Initialize Slider
         function initSlider(container) {
             const slider = container.querySelector('.slider');
             const slides = container.querySelectorAll('.slide');
+            const prevBtn = container.querySelector('.prev');
+            const nextBtn = container.querySelector('.next');
             let currentIndex = 0;
-
-            function updateSlider() {
-                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-                container.querySelectorAll('.slider-dot').forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-            }
+            let touchStartX = 0;
+            let touchEndX = 0;
 
             // Create dots
             const dotsContainer = container.querySelector('.slider-controls');
+            dotsContainer.innerHTML = '';
             slides.forEach((_, index) => {
                 const dot = document.createElement('div');
                 dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
@@ -203,71 +619,65 @@
                 dotsContainer.appendChild(dot);
             });
 
-            // Touch/swipe handling
-            let touchStartX = 0;
+            function updateSlider() {
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                container.querySelectorAll('.slider-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            // Navigation buttons
+            prevBtn.addEventListener('click', () => {
+                currentIndex = Math.max(currentIndex - 1, 0);
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = Math.min(currentIndex + 1, slides.length - 1);
+                updateSlider();
+            });
+
+            // Touch handling
             container.addEventListener('touchstart', e => {
                 touchStartX = e.touches[0].clientX;
             });
 
             container.addEventListener('touchend', e => {
-                const touchEndX = e.changedTouches[0].clientX;
+                touchEndX = e.changedTouches[0].clientX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
                 const diff = touchStartX - touchEndX;
                 if (Math.abs(diff) > 50) {
                     if (diff > 0) {
+                        // Swipe left
                         currentIndex = Math.min(currentIndex + 1, slides.length - 1);
                     } else {
+                        // Swipe right
                         currentIndex = Math.max(currentIndex - 1, 0);
                     }
                     updateSlider();
                 }
+            }
+
+            // Auto-rotate (optional)
+            let rotateInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            }, 5000);
+
+            container.addEventListener('mouseenter', () => {
+                clearInterval(rotateInterval);
+            });
+
+            container.addEventListener('mouseleave', () => {
+                rotateInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    updateSlider();
+                }, 5000);
             });
         }
-
-        // Render Products
-        function renderProducts() {
-            const container = document.getElementById('categories-container');
-            
-            storeData.categories.forEach(category => {
-                const categorySection = document.createElement('section');
-                categorySection.className = 'category';
-                categorySection.innerHTML = `
-                    <h2 class="category-title">${category.name}</h2>
-                    <div class="products-grid" id="${category.id}"></div>
-                `;
-                
-                const productsGrid = categorySection.querySelector('.products-grid');
-                // Add your products here
-                // Example product structure:
-                /*
-                productsGrid.innerHTML += `
-                    <div class="product-card">
-                        <div class="slider-container">
-                            <div class="slider">
-                                ${product.images.map(img => `
-                                    <div class="slide">
-                                        <img src="images/${img}" alt="${product.name}">
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <div class="slider-controls"></div>
-                        </div>
-                        <div class="product-info">
-                            <h3>${product.name}</h3>
-                            <p class="product-price">${product.price}</p>
-                            <p>Product Code: ${product.code}</p>
-                        </div>
-                    </div>
-                `;
-                */
-                
-                container.appendChild(categorySection);
-                categorySection.querySelectorAll('.slider-container').forEach(initSlider);
-            });
-        }
-
-        // Initialize the page
-        renderProducts();
     </script>
 </body>
 </html>
-
